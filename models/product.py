@@ -23,12 +23,9 @@ class Product:
             return "price must be non-negative"
         return None
 
-    # BUG: doesn't clamp percent to [0, 100] and doesn't guard against the
-    # result going negative for percent > 100 — a caller passing percent=150
-    # produces a negative price.
-    # KNOWN_CORRECT: `percent = max(0, min(100, percent))` before applying it.
     def apply_discount(self, percent):
         """Apply a percentage discount to this product's price in place."""
+        percent = max(0, min(100, percent))
         self.price = self.price * (1 - percent / 100)
         return self.price
 
